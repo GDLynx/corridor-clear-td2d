@@ -3,7 +3,12 @@
 ## Todo 
 * Player's sprite can look left/right based key input 
 * Player's sprite can look left/right based on device's accelerometer (device-orientation) 
-* Player can shoot when screen is tapped/clicked  
+* Visual representation of player (player's sprite) which corresponds with input 
+* Player can "shoot" when screen is tapped/clicked  
+* Determine if the player shot an enemy or a civillian 
+* Implement the effect of moving through a corridor (whether the player actually moves is to be decided) 
+* Implement points system 
+* Maybe: The game's speed will gradually increase as the player progresses 
 
 # Tools 
 
