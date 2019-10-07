@@ -12,7 +12,19 @@
         let canvas = document.querySelector("#corridor-clear"); 
         let ctx = canvas.getContext("2d"); 
 
+        let x = 100, y = 20; 
         
+        update(); 
+
+        function update() { 
+            ctx.clearRect(0, 0, 500, 500); 
+            y++; 
+            ctx.beginPath(); 
+            ctx.rect(x,y, 10, 10); 
+            ctx.stroke(); 
+            ctx.closePath();             
+            requestAnimationFrame(update);
+        }        
     </script>    
 </body>
 </html>
