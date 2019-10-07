@@ -9,6 +9,7 @@
 * Implement the effect of moving through a corridor (whether the player actually moves is to be decided) 
 * Implement points system 
 * Maybe: The game's speed will gradually increase as the player progresses 
+* Create/obtain player sprite assets (one image for facing/aiming forward, one for facing left, one for facing right)
 
 # Tools 
 
