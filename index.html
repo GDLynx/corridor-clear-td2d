@@ -15,7 +15,7 @@
         let x = 100, y = 20; 
         let onMobile; 
 
-        let playerDirection = ""; 
+        let playerDirection = ""; // right , left, forward 
 
         function init() {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -34,8 +34,12 @@
                     //  playerDirection = ... 
                     if (event.gamma < -30) { 
                         console.log("left"); 
+                        playerDirection = "left"; 
                     } else if (event.gamma >= 30) { 
                         console.log("right"); 
+                        playerDirection = "right"; 
+                    } else {
+                        playerDirection = "forward"; 
                     }
                 }); 
             };
@@ -54,11 +58,16 @@
 
         function update() { 
             ctx.clearRect(0, 0, 500, 500); 
-            y++; 
-            ctx.beginPath(); 
-            ctx.rect(x,y, 10, 10); 
-            ctx.stroke(); 
-            ctx.closePath();             
+            let playerImage = new Image(); 
+            if (playerDirection == "right") {
+                playerImage.src = "./player-aiming-right.png"
+            } else if (playerDirection == "left") {
+                playerImage.src = "./player-aiming-left.png"
+            } else { 
+                playerImage.src = "./player-aiming-forward.png"
+            } 
+            ctx.drawImage(playerImage, x, y, 100, 100); 
+
             requestAnimationFrame(update);
         }        
     </script>    
