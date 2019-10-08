@@ -12,7 +12,7 @@
     </style> 
 </head>
 <body>
-    <canvas id="corridor-clear" width="250" height="250"></canvas>
+    <canvas id="corridor-clear" width="250" height="100"></canvas>
     <script>
         let canvas = document.querySelector("#corridor-clear"); 
         let ctx = canvas.getContext("2d"); 
@@ -27,7 +27,7 @@
         let room = { 
             x: 1, y: 1, side: null, civillian: false, scanned: false, 
             images: ["./room.png", "./room-right.png"], /* src: this.images[0],  */ 
-            width: 100, height: 200 
+            width: 100, height: 220 
         } 
 
         function init() {
@@ -93,8 +93,8 @@
             }
             ctx.closePath(); 
 
-            if (room.y >= 250) { 
-                room.y = 0; 
+            if (room.y >= 0) { // if (room.y + room.height/2 >= 250) { 
+                room.y = -120; 
                 
                 let randNumber = Math.floor(Math.random() * 2); 
                 randNumber >= 1 ? room.civillian = true : room.civillian = false; 
@@ -105,7 +105,7 @@
                 } else {
                     room.x = 150; 
                     // roomImage.src = room.images[0]; 
-                }
+                } 
 
                 if (room.speed < 5) { 
                     room.speed += 0.5; 
@@ -121,7 +121,7 @@
             } else { 
                 playerImage.src = "./player-aiming-forward.png"
             } 
-            ctx.drawImage(playerImage, 110, 150, 25, 25); 
+            ctx.drawImage(playerImage, 110, 50, 25, 25); 
 
             requestAnimationFrame(update);
         }        
