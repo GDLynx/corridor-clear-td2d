@@ -75,25 +75,7 @@
             ctx.clearRect(0, 0, 500, 500); 
             room.y += speed; 
             
-            room.x >= 150 ? roomImage.src = "./room-right.png" : roomImage.src = "./room.png"; 
-
-            ctx.beginPath(); 
-            ctx.rect(room.x, room.y, room.width, room.height); 
-            // let roomImage = new Image(); 
-            // roomImage.src  = "./room.png"; 
-            if (room.y + room.height/2 < 90) {
-                if (room.civillian) { 
-                    ctx.fillStyle = "green"; 
-                } else {
-                    ctx.fillStyle = "red"; 
-                }
-                ctx.fill(); 
-            } else {
-                ctx.stroke(); 
-            }
-            ctx.closePath(); 
-
-            if (room.y >= 0) { // if (room.y + room.height/2 >= 250) { 
+            room.x >= 150 ? roomImage.src = "./room-right.png" : roomImage.src = "./room.png";             if (room.y >= 0) { // if (room.y + room.height/2 >= 250) { 
                 room.y = -120; 
                 
                 let randNumber = Math.floor(Math.random() * 2); 
@@ -112,6 +94,24 @@
                 }
             } 
             ctx.drawImage(roomImage, room.x, room.y, room.width, room.height); 
+            
+            /// Room Scan - will indicate to the user if the room contains a civillian (green) or not 
+            ctx.beginPath(); 
+            ctx.rect(room.x + room.width/2 - 30, room.y + room.height/4 + 30, room.width/2, room.height/4); 
+            // let roomImage = new Image(); 
+            // roomImage.src  = "./room.png"; 
+            if (room.y + room.height/2 < 15) {
+                console.log(room.y); 
+                if (room.civillian) { 
+                    ctx.fillStyle = "green"; 
+                } else {
+                    ctx.fillStyle = "red"; 
+                }
+                ctx.fill(); 
+            } else {
+                ctx.stroke(); 
+            }
+            ctx.closePath(); 
 
             let playerImage = new Image(); 
             if (playerDirection == "right") {
