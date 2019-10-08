@@ -5,17 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Corridor Clear</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style> 
+    canvas { 
+        border: 2px solid black; 
+    }
+    </style> 
 </head>
 <body>
-    <canvas id="corridor-clear"></canvas>
+    <canvas id="corridor-clear" width="250" height="250"></canvas>
     <script>
         let canvas = document.querySelector("#corridor-clear"); 
         let ctx = canvas.getContext("2d"); 
 
-        let x = 100, y = 20; 
         let onMobile; 
 
         let playerDirection = ""; // right , left, forward 
+        let speed = 1; 
+
+        let room = { 
+            x: 1, y: 1, side: null, civillian: false, scanned: false, 
+            width: 100, height: 100 
+        } 
 
         function init() {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -32,10 +42,10 @@
                     // player.getDeviceOrientation(); 
                     // if (DeviceOrientationEvent.gamma < 1)  
                     //  playerDirection = ... 
-                    if (event.gamma < -30) { 
+                    if (event.gamma < -25) { 
                         console.log("left"); 
                         playerDirection = "left"; 
-                    } else if (event.gamma >= 30) { 
+                    } else if (event.gamma >= 25) { 
                         console.log("right"); 
                         playerDirection = "right"; 
                     } else {
@@ -52,12 +62,46 @@
 
             /// Begin Game
             update();
-        }
+        } 
 
         init(); 
 
         function update() { 
             ctx.clearRect(0, 0, 500, 500); 
+            room.y += speed; 
+
+            ctx.beginPath(); 
+            ctx.rect(room.x, room.y, room.width, room.height); 
+            if (room.y + room.height/2 < 90) {
+                if (room.civillian) { 
+                    ctx.fillStyle = "green"; 
+
+                } else {
+                    ctx.fillStyle = "red"; 
+                }
+                ctx.fill(); 
+            } else {
+                ctx.stroke(); 
+            }
+            ctx.closePath(); 
+
+            if (room.y >= 250) { 
+                room.y = 0; 
+                
+                let randNumber = Math.floor(Math.random() * 2); 
+                randNumber >= 1 ? room.civillian = true : room.civillian = false; 
+
+                if (Math.floor(Math.random() * 2) >= 1) { 
+                    room.x = 1; 
+                } else {
+                    room.x = 150; 
+                }
+
+                if (room.speed < 5) { 
+                    room.speed += 0.5; 
+                }
+            } 
+
             let playerImage = new Image(); 
             if (playerDirection == "right") {
                 playerImage.src = "./player-aiming-right.png"
@@ -66,7 +110,7 @@
             } else { 
                 playerImage.src = "./player-aiming-forward.png"
             } 
-            ctx.drawImage(playerImage, x, y, 100, 100); 
+            ctx.drawImage(playerImage, 110, 150, 25, 25); 
 
             requestAnimationFrame(update);
         }        
