@@ -19,13 +19,13 @@
 
         let onMobile; 
 
-        let playerDirection = ""; // right , left, forward 
+        let playerDirection = "forward"; // right , left, forward 
         let speed = 1; 
 
         let roomImage; 
 
         let room = { 
-            x: 1, y: 1, side: null, civillian: false, scanned: false, 
+            x: 1, y: 1, side: "left", civillian: false, scanned: false, 
             images: ["./room.png", "./room-right.png"], /* src: this.images[0],  */ 
             width: 100, height: 220 
         } 
@@ -83,9 +83,11 @@
 
                 if (Math.floor(Math.random() * 2) >= 1) { 
                     room.x = 1; 
+                    room.side = "left"; 
                     // roomImage.src = room.images[1]; 
                 } else {
                     room.x = 150; 
+                    room.side == "right"; 
                     // roomImage.src = room.images[0]; 
                 } 
 
@@ -115,16 +117,30 @@
 
             let playerImage = new Image(); 
             if (playerDirection == "right") {
-                playerImage.src = "./player-aiming-right.png"
+                playerImage.src = "./player-aiming-right.png"; 
             } else if (playerDirection == "left") {
-                playerImage.src = "./player-aiming-left.png"
+                playerImage.src = "./player-aiming-left.png"; 
             } else { 
-                playerImage.src = "./player-aiming-forward.png"
+                playerImage.src = "./player-aiming-forward.png"; 
             } 
             ctx.drawImage(playerImage, 110, 50, 25, 25); 
 
             requestAnimationFrame(update);
         }        
+        
+        canvas.addEventListener("click", e => { // window.addEventListener("click", e => {
+            console.log(playerDirection + " " + room.side); 
+            if (room.y >= -60 && room.y <= -50) { 
+                if (playerDirection == room.side) { 
+                    if (room.civillian) {
+                        alert("You shot a civillian");                     
+                    } else {
+                        console.log("Room clear"); 
+                    } 
+                }
+            }
+        }); 
+
     </script>    
 </body>
 </html>
