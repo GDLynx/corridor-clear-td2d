@@ -27,8 +27,10 @@
         let room = { 
             x: 1, y: 1, side: "left", civillian: false, scanned: false, 
             images: ["./room.png", "./room-right.png"], /* src: this.images[0],  */ 
-            width: 100, height: 220 
+            width: 100, height: 220, cleared: false
         } 
+
+        let points = 0; 
 
         function init() {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -78,6 +80,7 @@
             room.x >= 150 ? roomImage.src = "./room-right.png" : roomImage.src = "./room.png";             
             
             if (room.y >= 0) { // if (room.y + room.height/2 >= 250) { 
+                room.cleared = false; 
                 room.y = -120; 
                 
                 let randNumber = Math.floor(Math.random() * 2); 
@@ -93,7 +96,7 @@
                     // roomImage.src = room.images[0]; 
                 } 
 
-                if (room.speed < 5) { 
+                if (room.speed < 10) { 
                     room.speed += 0.5; 
                 }
             } 
@@ -127,6 +130,10 @@
             } 
             ctx.drawImage(playerImage, 110, 50, 25, 25); 
 
+            ctx.fillStyle = "blue"; 
+            ctx.fillText("Points: " + points, 90, 30); 
+            ctx.font = "14px helvetica"; 
+
             requestAnimationFrame(update);
         }        
         
@@ -136,7 +143,10 @@
                 if (playerDirection == room.side) { 
                     if (room.civillian) {
                         alert("You shot a civillian");                     
+                        location.reload(); 
                     } else {
+                        room.cleared == false ? points += 1 : null;                         
+                        room.cleared = true; 
                         console.log("Room clear"); 
                     } 
                 }
